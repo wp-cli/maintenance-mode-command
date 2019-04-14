@@ -8,7 +8,7 @@ Feature: Manage maintenance mode of WordPress install.
     When I run `wp maintenance-mode status`
     Then STDOUT should be:
       """
-      Success: Maintenance mode is not active.
+      Maintenance mode is not active.
       """
 
     When I run `wp maintenance-mode activate`
@@ -24,7 +24,7 @@ Feature: Manage maintenance mode of WordPress install.
     When I run `wp maintenance-mode status`
     Then STDOUT should be:
       """
-      Success: Maintenance mode is active.
+      Maintenance mode is active.
       """
 
     When I try `wp maintenance-mode activate`

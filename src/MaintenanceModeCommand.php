@@ -2,7 +2,6 @@
 
 namespace WP_CLI\MaintenanceMode;
 
-use WP_Upgrader;
 /**
  * Activates, deactivates or checks the status of the maintenance mode of a site.
  *
@@ -33,10 +32,10 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
 			WP_Filesystem(); // Initialises WordPress Filesystem classes.
-			if ( ! class_exists( 'WP_Upgrader' ) ) {
+			if ( ! class_exists( '\WP_Upgrader' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 			}
-			self::$instance = new WP_Upgrader( new \WP_CLI\UpgraderSkin() );
+			self::$instance = new \WP_Upgrader( new \WP_CLI\UpgraderSkin() );
 			self::$instance->init();
 		}
 		return self::$instance;
@@ -91,15 +90,15 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 * ## EXAMPLES
 	 *
 	 *     $ wp maintenance-mode status
-	 *     Success: Maintenance mode is active.
+	 *     Maintenance mode is active.
 	 *
 	 * @subcommand status
 	 */
 	public function status() {
 		if ( $this->maintenance_mode_status() ) {
-			\WP_CLI::success( 'Maintenance mode is active.' );
+			\WP_CLI::line( 'Maintenance mode is active.' );
 		} else {
-			\WP_CLI::success( 'Maintenance mode is not active.' );
+			\WP_CLI::line( 'Maintenance mode is not active.' );
 		}
 	}
 
