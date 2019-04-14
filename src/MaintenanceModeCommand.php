@@ -46,7 +46,6 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 */
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
-			WP_Filesystem(); // Initialises WordPress Filesystem classes.
 			if ( ! class_exists( '\WP_Upgrader' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 			}
@@ -138,14 +137,23 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 * @return bool
 	 */
 	private function maintenance_mode_status() {
-		WP_Filesystem();
 
-		global $wp_filesystem;
+		$wp_filesystem = $this->init_wp_filesystem();
 
 		if ( $wp_filesystem->exists( $wp_filesystem->abspath() . '.maintenance' ) ) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Initializes WP_Filesystem.
+	 */
+	protected function init_wp_filesystem() {
+		global $wp_filesystem;
+		WP_Filesystem();
+
+		return $wp_filesystem;
 	}
 }
