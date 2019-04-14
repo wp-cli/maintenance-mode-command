@@ -70,7 +70,7 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 * @subcommand activate
 	 */
 	public function activate( $_, $assoc_args ) {
-		if ( $this->maintenance_mode_status() && ! \WP_CLI\Utils\get_flag_value( $assoc_args, 'force' ) ) {
+		if ( $this->get_maintenance_mode_status() && ! \WP_CLI\Utils\get_flag_value( $assoc_args, 'force' ) ) {
 			\WP_CLI::error( 'Maintenance mode already activated.' );
 		}
 
@@ -90,7 +90,7 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 * @subcommand deactivate
 	 */
 	public function deactivate() {
-		if ( $this->maintenance_mode_status() ) {
+		if ( $this->get_maintenance_mode_status() ) {
 			self::get_instance()->maintenance_mode( false );
 			\WP_CLI::success( 'Deactivated Maintenance mode.' );
 		} else {
@@ -109,7 +109,7 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 * @subcommand status
 	 */
 	public function status() {
-		if ( $this->maintenance_mode_status() ) {
+		if ( $this->get_maintenance_mode_status() ) {
 			\WP_CLI::line( 'Maintenance mode is active.' );
 		} else {
 			\WP_CLI::line( 'Maintenance mode is not active.' );
@@ -128,7 +128,7 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 * @subcommand is-active
 	 */
 	public function is_active() {
-		\WP_CLI::halt( $this->maintenance_mode_status() ? 0 : 1 );
+		\WP_CLI::halt( $this->get_maintenance_mode_status() ? 0 : 1 );
 	}
 
 	/**
@@ -136,7 +136,7 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 *
 	 * @return bool
 	 */
-	private function maintenance_mode_status() {
+	private function get_maintenance_mode_status() {
 
 		$wp_filesystem = $this->init_wp_filesystem();
 
