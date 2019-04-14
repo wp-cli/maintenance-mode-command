@@ -1,7 +1,7 @@
 {
     "name": "wp-cli/maintenance-mode-command",
     "type": "wp-cli-package",
-    "description": "Provides internationalization tools for WordPress projects.",
+    "description": "Activates, deactivates or checks the status of the maintenance mode of a site.",
     "homepage": "https://github.com/wp-cli/maintenance-mode-command",
     "license": "MIT",
     "authors": [

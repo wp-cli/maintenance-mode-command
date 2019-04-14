@@ -1,6 +1,6 @@
 # Used by Probot Settings: https://probot.github.io/apps/settings/
 repository:
-  description: Provides internationalization tools for WordPress projects.
+  description: Activates, deactivates or checks the status of the maintenance mode of a site.
 labels:
   - name: bug
     color: fc2929
