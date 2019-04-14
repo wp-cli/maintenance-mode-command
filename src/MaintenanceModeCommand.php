@@ -23,12 +23,23 @@ namespace WP_CLI\MaintenanceMode;
  *     1
  *
  * @when after_wp_load
+ * @package wp-cli
  */
 class MaintenanceModeCommand extends \WP_CLI_Command {
 
 
+	/**
+	 * Instance of the class.
+	 *
+	 * @var object Instance of the class.
+	 */
 	private static $instance;
 
+	/**
+	 * Return instance of the class.
+	 *
+	 * @return object
+	 */
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
 			WP_Filesystem(); // Initialises WordPress Filesystem classes.
