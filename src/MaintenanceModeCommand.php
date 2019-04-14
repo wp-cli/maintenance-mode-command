@@ -7,17 +7,21 @@ namespace WP_CLI\MaintenanceMode;
  *
  * ## EXAMPLES
  *
+ *     # Activate Maintenance mode.
  *     $ wp maintenance-mode activate
  *     Enabling Maintenance mode...
  *     Success: Activated Maintenance mode.
  *
+ *     # Deactivate Maintenance mode.
  *     $ wp maintenance-mode deactivate
  *     Disabling Maintenance mode...
  *     Success: Deactivated Maintenance mode.
  *
+ *     # Display Maintenance mode status.
  *     $ wp maintenance-mode status
- *     Success: Maintenance mode is active.
+ *     Maintenance mode is active.
  *
+ *     # Get Maintenance mode status for scripting purpose.
  *     $ wp maintenance-mode is-active
  *     $ echo $?
  *     1
