@@ -27,7 +27,7 @@ Feature: Manage maintenance mode of WordPress install.
       Success: Maintenance mode is active.
       """
 
-    When I try `wp maintenance-mode acitvate`
+    When I try `wp maintenance-mode activate`
     Then STDERR should be:
       """
       Error: Maintenance mode already activated.
