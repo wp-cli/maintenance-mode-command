@@ -4,15 +4,7 @@
     "description": "Activates, deactivates or checks the status of the maintenance mode of a site.",
     "homepage": "https://github.com/wp-cli/maintenance-mode-command",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Pascal Birchler",
-            "homepage": "https://pascalbirchler.com/"
-        }
-    ],
     "require": {
-        "gettext/gettext": "^4.6",
-        "mck89/peast": "^1.8",
         "wp-cli/wp-cli": "^2"
     },
     "require-dev": {
@@ -30,13 +22,15 @@
         "bundled": true,
         "commands": [
             "maintenance-mode",
-            "maintenance-mode make-pot",
-            "maintenance-mode make-json"
+            "maintenance-mode activate",
+            "maintenance-mode deactivate",
+            "maintenance-mode status",
+            "maintenance-mode is-active"
         ]
     },
     "autoload": {
         "psr-4": {
-            "WP_CLI\\I18n\\": "src/"
+            "WP_CLI\\MaintenanceMode\\": "src/"
         },
         "files": [
             "maintenance-mode-command.php"
