@@ -52,6 +52,7 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 			self::$instance = new \WP_Upgrader( new \WP_CLI\UpgraderSkin() );
 			self::$instance->init();
 		}
+
 		return self::$instance;
 	}
 
@@ -137,14 +138,9 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 * @return bool
 	 */
 	private function get_maintenance_mode_status() {
-
 		$wp_filesystem = $this->init_wp_filesystem();
 
-		if ( $wp_filesystem->exists( $wp_filesystem->abspath() . '.maintenance' ) ) {
-			return true;
-		} else {
-			return false;
-		}
+		return $wp_filesystem->exists( $wp_filesystem->abspath() . '.maintenance' );
 	}
 
 	/**
