@@ -2,6 +2,11 @@
 
 namespace WP_CLI\MaintenanceMode;
 
+use WP_CLI;
+use WP_CLI_Command;
+use WP_Upgrader;
+use WP_Filesystem_Base;
+
 /**
  * Activates, deactivates or checks the status of the maintenance mode of a site.
  *
@@ -29,13 +34,13 @@ namespace WP_CLI\MaintenanceMode;
  * @when    after_wp_load
  * @package wp-cli
  */
-class MaintenanceModeCommand extends \WP_CLI_Command {
+class MaintenanceModeCommand extends WP_CLI_Command {
 
 
 	/**
-	 * Instance of \WP_Upgrader.
+	 * Instance of WP_Upgrader.
 	 *
-	 * @var \WP_Upgrader
+	 * @var WP_Upgrader
 	 */
 	private $upgrader;
 
@@ -43,15 +48,15 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 * Instantiate a MaintenanceModeCommand object.
 	 */
 	public function __construct() {
-		if ( ! class_exists( '\WP_Upgrader' ) ) {
+		if ( ! class_exists( 'WP_Upgrader' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 		}
-		$this->upgrader = new \WP_Upgrader( new \WP_CLI\UpgraderSkin() );
+		$this->upgrader = new WP_Upgrader( new WP_CLI\UpgraderSkin() );
 		$this->upgrader->init();
 	}
 
 	/**
-	 * Activates Maintenance mode.
+	 * Activates maintenance mode.
 	 *
 	 * [--force]
 	 * : Force maintenance mode activation operation.
@@ -61,58 +66,52 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 *     $ wp maintenance-mode activate
 	 *     Enabling Maintenance mode...
 	 *     Success: Activated Maintenance mode.
-	 *
-	 * @subcommand activate
 	 */
 	public function activate( $_, $assoc_args ) {
-		if ( $this->get_maintenance_mode_status() && ! \WP_CLI\Utils\get_flag_value( $assoc_args, 'force' ) ) {
-			\WP_CLI::error( 'Maintenance mode already activated.' );
+		if ( $this->get_maintenance_mode_status() && ! WP_CLI\Utils\get_flag_value( $assoc_args, 'force' ) ) {
+			WP_CLI::error( 'Maintenance mode already activated.' );
 		}
 
 		$this->upgrader->maintenance_mode( true );
-		\WP_CLI::success( 'Activated Maintenance mode.' );
+		WP_CLI::success( 'Activated Maintenance mode.' );
 	}
 
 	/**
-	 * Deactivates Maintenance mode.
+	 * Deactivates maintenance mode.
 	 *
 	 * ## EXAMPLES
 	 *
 	 *     $ wp maintenance-mode deactivate
 	 *     Disabling Maintenance mode...
 	 *     Success: Deactivated Maintenance mode.
-	 *
-	 * @subcommand deactivate
 	 */
 	public function deactivate() {
 		if ( $this->get_maintenance_mode_status() ) {
 			$this->upgrader->maintenance_mode( false );
-			\WP_CLI::success( 'Deactivated Maintenance mode.' );
+			WP_CLI::success( 'Deactivated Maintenance mode.' );
 		} else {
-			\WP_CLI::error( 'Maintenance mode already deactivated.' );
+			WP_CLI::error( 'Maintenance mode already deactivated.' );
 		}
 	}
 
 	/**
-	 * Displays Maintenance mode status.
+	 * Displays maintenance mode status.
 	 *
 	 * ## EXAMPLES
 	 *
 	 *     $ wp maintenance-mode status
 	 *     Maintenance mode is active.
-	 *
-	 * @subcommand status
 	 */
 	public function status() {
 		if ( $this->get_maintenance_mode_status() ) {
-			\WP_CLI::line( 'Maintenance mode is active.' );
+			WP_CLI::line( 'Maintenance mode is active.' );
 		} else {
-			\WP_CLI::line( 'Maintenance mode is not active.' );
+			WP_CLI::line( 'Maintenance mode is not active.' );
 		}
 	}
 
 	/**
-	 * Detects Maintenance mode status.
+	 * Detects maintenance mode status.
 	 *
 	 * ## EXAMPLES
 	 *
@@ -123,22 +122,26 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 * @subcommand is-active
 	 */
 	public function is_active() {
-		\WP_CLI::halt( $this->get_maintenance_mode_status() ? 0 : 1 );
+		WP_CLI::halt( $this->get_maintenance_mode_status() ? 0 : 1 );
 	}
 
 	/**
-	 * Return status of maintenance mode.
+	 * Returns status of maintenance mode.
 	 *
 	 * @return bool
 	 */
 	private function get_maintenance_mode_status() {
 		$wp_filesystem = $this->init_wp_filesystem();
 
-		return $wp_filesystem->exists( $wp_filesystem->abspath() . '.maintenance' );
+		$maintenance_file = trailingslashit( $wp_filesystem->abspath() ) . '.maintenance';
+
+		return $wp_filesystem->exists( $maintenance_file );
 	}
 
 	/**
 	 * Initializes WP_Filesystem.
+	 *
+	 * @return WP_Filesystem_Base
 	 */
 	protected function init_wp_filesystem() {
 		global $wp_filesystem;
