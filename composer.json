@@ -4,6 +4,13 @@
     "description": "Activates, deactivates or checks the status of the maintenance mode of a site.",
     "homepage": "https://github.com/wp-cli/maintenance-mode-command",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Thrijith Thankachan",
+            "email": "thrijith13@gmail.com",
+            "homepage": "https://thrijith.com"
+        }
+    ],
     "require": {
         "wp-cli/wp-cli": "^2"
     },
