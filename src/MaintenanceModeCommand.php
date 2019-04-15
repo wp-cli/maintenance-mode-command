@@ -86,12 +86,12 @@ class MaintenanceModeCommand extends WP_CLI_Command {
 	 *     Success: Deactivated Maintenance mode.
 	 */
 	public function deactivate() {
-		if ( $this->get_maintenance_mode_status() ) {
-			$this->upgrader->maintenance_mode( false );
-			WP_CLI::success( 'Deactivated Maintenance mode.' );
-		} else {
+		if ( ! $this->get_maintenance_mode_status() ) {
 			WP_CLI::error( 'Maintenance mode already deactivated.' );
 		}
+
+		$this->upgrader->maintenance_mode( false );
+		WP_CLI::success( 'Deactivated Maintenance mode.' );
 	}
 
 	/**
@@ -103,11 +103,8 @@ class MaintenanceModeCommand extends WP_CLI_Command {
 	 *     Maintenance mode is active.
 	 */
 	public function status() {
-		if ( $this->get_maintenance_mode_status() ) {
-			WP_CLI::line( 'Maintenance mode is active.' );
-		} else {
-			WP_CLI::line( 'Maintenance mode is not active.' );
-		}
+		$status = $this->get_maintenance_mode_status() ? 'active' : 'not active';
+		WP_CLI::line( "Maintenance mode is {$status}." );
 	}
 
 	/**
