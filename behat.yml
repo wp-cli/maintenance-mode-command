@@ -1,4 +1,0 @@
-default:
-  paths:
-    features: features
-    bootstrap: vendor/wp-cli/wp-cli-tests/features/bootstrap
