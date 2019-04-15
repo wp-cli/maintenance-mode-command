@@ -26,34 +26,28 @@ namespace WP_CLI\MaintenanceMode;
  *     $ echo $?
  *     1
  *
- * @when after_wp_load
+ * @when    after_wp_load
  * @package wp-cli
  */
 class MaintenanceModeCommand extends \WP_CLI_Command {
 
 
 	/**
-	 * Instance of the class.
+	 * Instance of \WP_Upgrader.
 	 *
-	 * @var object Instance of the class.
+	 * @var \WP_Upgrader
 	 */
-	private static $instance;
+	private $upgrader;
 
 	/**
-	 * Return instance of the class.
-	 *
-	 * @return object
+	 * Instantiate a MaintenanceModeCommand object.
 	 */
-	public static function get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			if ( ! class_exists( '\WP_Upgrader' ) ) {
-				require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-			}
-			self::$instance = new \WP_Upgrader( new \WP_CLI\UpgraderSkin() );
-			self::$instance->init();
+	public function __construct() {
+		if ( ! class_exists( '\WP_Upgrader' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 		}
-
-		return self::$instance;
+		$this->upgrader = new \WP_Upgrader( new \WP_CLI\UpgraderSkin() );
+		$this->upgrader->init();
 	}
 
 	/**
@@ -75,7 +69,7 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 			\WP_CLI::error( 'Maintenance mode already activated.' );
 		}
 
-		self::get_instance()->maintenance_mode( true );
+		$this->upgrader->maintenance_mode( true );
 		\WP_CLI::success( 'Activated Maintenance mode.' );
 	}
 
@@ -92,7 +86,7 @@ class MaintenanceModeCommand extends \WP_CLI_Command {
 	 */
 	public function deactivate() {
 		if ( $this->get_maintenance_mode_status() ) {
-			self::get_instance()->maintenance_mode( false );
+			$this->upgrader->maintenance_mode( false );
 			\WP_CLI::success( 'Deactivated Maintenance mode.' );
 		} else {
 			\WP_CLI::error( 'Maintenance mode already deactivated.' );
