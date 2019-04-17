@@ -10,10 +10,10 @@
 	#############################################################################
 	-->
 
-	<!-- What to scan -->
+	<!-- What to scan. -->
 	<file>.</file>
 
-	<!-- Ignoring select files/folders
+	<!-- Ignoring select files/folders.
 		 https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#ignoring-files-and-folders -->
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
