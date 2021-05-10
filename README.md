@@ -3,7 +3,7 @@ wp-cli/maintenance-mode-command
 
 Activates, deactivates or checks the status of the maintenance mode of a site.
 
-[![Build Status](https://travis-ci.org/wp-cli/maintenance-mode-command.svg?branch=master)](https://travis-ci.org/wp-cli/maintenance-mode-command)
+
 
 Quick links: [Using](#using) | [Installing](#installing) | [Contributing](#contributing) | [Support](#support)
 
