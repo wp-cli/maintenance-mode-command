@@ -55,3 +55,13 @@ Feature: Manage maintenance mode of WordPress install.
       """
       Error: Maintenance mode already deactivated.
       """
+
+    When I run `wp maintenance-mode activate`
+    Then STDOUT should be:
+      """
+      Enabling Maintenance mode...
+      Success: Activated Maintenance mode.
+      """
+
+    When I try `wp --exec="file_put_contents('.maintenance', '<?php \$upgrading=(time()-601);'); " maintenance-mode is-active`
+    Then the return code should be 1

@@ -132,7 +132,22 @@ class MaintenanceModeCommand extends WP_CLI_Command {
 
 		$maintenance_file = trailingslashit( $wp_filesystem->abspath() ) . '.maintenance';
 
-		return $wp_filesystem->exists( $maintenance_file );
+		if ( ! $wp_filesystem->exists( $maintenance_file ) ) {
+			return false;
+		}
+
+		require ABSPATH . '.maintenance';
+		/**
+		 * We use the timestamp defined in the .maintenance file
+		 * to check if the maintenance is available.
+		 *
+		 * @var int $upgrading Upgrade time.
+		 */
+
+		if ( ( time() - $upgrading ) >= 10 * MINUTE_IN_SECONDS ) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
