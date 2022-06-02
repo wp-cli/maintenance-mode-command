@@ -63,5 +63,6 @@ Feature: Manage maintenance mode of WordPress install.
       Success: Activated Maintenance mode.
       """
 
-    When I try `wp --exec="file_put_contents('.maintenance', '<?php \$upgrading=(time()-601);'); " maintenance-mode is-active`
+    When I run `wp eval "file_put_contents('.maintenance', '<?php \$upgrading=(time()-601);'); "`
+    And I try `wp maintenance-mode is-active`
     Then the return code should be 1
