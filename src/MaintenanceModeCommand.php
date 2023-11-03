@@ -136,13 +136,15 @@ class MaintenanceModeCommand extends WP_CLI_Command {
 			return false;
 		}
 
-		require ABSPATH . '.maintenance';
-		/**
-		 * We use the timestamp defined in the .maintenance file
-		 * to check if the maintenance is available.
-		 *
-		 * @var int $upgrading Upgrade time.
-		 */
+		// We use the timestamp defined in the .maintenance file
+		// to check if the maintenance is available.
+		$upgrading = 0;
+
+		$contents = $wp_filesystem->get_contents( $maintenance_file );
+		$matches  = [];
+		if ( preg_match( '/upgrading = (\d+);/i', $contents, $matches ) ) {
+			$upgrading = (int) $matches[1];
+		}
 
 		if ( ( time() - $upgrading ) >= 10 * MINUTE_IN_SECONDS ) {
 			return false;
