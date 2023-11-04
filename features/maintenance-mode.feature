@@ -80,5 +80,5 @@ Feature: Manage maintenance mode of WordPress install.
     Then the return code should be 0
 
     When I run `wp eval "file_put_contents('.maintenance', '<?php \$upgrading= ' . time() + 100 . ';'); "`
-    And I try `wp maintenance-mode is-active`
+    And I run `wp maintenance-mode is-active`
     Then the return code should be 0
