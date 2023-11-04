@@ -66,3 +66,19 @@ Feature: Manage maintenance mode of WordPress install.
     When I run `wp eval "file_put_contents('.maintenance', '<?php \$upgrading=(time()-601);'); "`
     And I try `wp maintenance-mode is-active`
     Then the return code should be 1
+    Then STDERR should contain:
+      """
+      Unable to read the maintenance file timestamp, non-numeric value detected.
+      """
+
+    When I run `wp eval "file_put_contents('.maintenance', '<?php \$upgrading=' . time() + 100 . ';'); "`
+    And I try `wp maintenance-mode is-active`
+    Then the return code should be 0
+
+    When I run `wp eval "file_put_contents('.maintenance', '<?php \$upgrading =' . time() + 100 . ';')  ; "`
+    And I try `wp maintenance-mode is-active`
+    Then the return code should be 0
+
+    When I run `wp eval "file_put_contents('.maintenance', '<?php \$upgrading= ' . time() + 100 . ';'); "`
+    And I try `wp maintenance-mode is-active`
+    Then the return code should be 0

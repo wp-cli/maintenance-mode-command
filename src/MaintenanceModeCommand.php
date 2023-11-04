@@ -142,8 +142,10 @@ class MaintenanceModeCommand extends WP_CLI_Command {
 
 		$contents = $wp_filesystem->get_contents( $maintenance_file );
 		$matches  = [];
-		if ( preg_match( '/upgrading = (\d+);/i', $contents, $matches ) ) {
+		if ( preg_match( '/upgrading\s*=\s*(\d+)\s*;/i', $contents, $matches ) ) {
 			$upgrading = (int) $matches[1];
+		} else {
+			WP_CLI::warning( 'Unable to read the maintenance file timestamp, non-numeric value detected.' );
 		}
 
 		if ( ( time() - $upgrading ) >= 10 * MINUTE_IN_SECONDS ) {
