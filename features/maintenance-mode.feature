@@ -70,7 +70,7 @@ Feature: Manage maintenance mode of WordPress install.
     Then the return code should be 1
     Then STDERR should contain:
       """
-      Unable to read the maintenance file timestamp, non-numeric value detected.
+      Warning: Unable to read the maintenance file timestamp, non-numeric value detected.
       """
 
   Scenario: Check maintenance mode status when numeric timestamp is used.
