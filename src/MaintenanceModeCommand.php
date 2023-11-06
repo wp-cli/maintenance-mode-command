@@ -132,7 +132,26 @@ class MaintenanceModeCommand extends WP_CLI_Command {
 
 		$maintenance_file = trailingslashit( $wp_filesystem->abspath() ) . '.maintenance';
 
-		return $wp_filesystem->exists( $maintenance_file );
+		if ( ! $wp_filesystem->exists( $maintenance_file ) ) {
+			return false;
+		}
+
+		// We use the timestamp defined in the .maintenance file
+		// to check if the maintenance is available.
+		$upgrading = 0;
+
+		$contents = $wp_filesystem->get_contents( $maintenance_file );
+		$matches  = [];
+		if ( preg_match( '/upgrading\s*=\s*(\d+)\s*;/i', $contents, $matches ) ) {
+			$upgrading = (int) $matches[1];
+		} else {
+			WP_CLI::warning( 'Unable to read the maintenance file timestamp, non-numeric value detected.' );
+		}
+		// The logic here is based on the core WordPress `wp_is_maintenance_mode()` function.
+		if ( ( time() - $upgrading ) >= 10 * MINUTE_IN_SECONDS ) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
