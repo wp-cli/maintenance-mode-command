@@ -147,7 +147,7 @@ class MaintenanceModeCommand extends WP_CLI_Command {
 		} else {
 			WP_CLI::warning( 'Unable to read the maintenance file timestamp, non-numeric value detected.' );
 		}
-
+		// The logic here is based on the core WordPress `wp_is_maintenance_mode()` function.
 		if ( ( time() - $upgrading ) >= 10 * MINUTE_IN_SECONDS ) {
 			return false;
 		}
