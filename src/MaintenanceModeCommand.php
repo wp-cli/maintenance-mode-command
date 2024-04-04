@@ -58,6 +58,8 @@ class MaintenanceModeCommand extends WP_CLI_Command {
 	/**
 	 * Activates maintenance mode.
 	 *
+	 * ## OPTIONS
+	 *
 	 * [--force]
 	 * : Force maintenance mode activation operation.
 	 *

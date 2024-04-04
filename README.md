@@ -50,6 +50,8 @@ Activates maintenance mode.
 wp maintenance-mode activate [--force]
 ~~~
 
+**OPTIONS**
+
 	[--force]
 		Force maintenance mode activation operation.
 
