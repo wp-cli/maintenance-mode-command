@@ -142,7 +142,7 @@ class MaintenanceModeCommand extends WP_CLI_Command {
 		// to check if the maintenance is available.
 		$upgrading = 0;
 
-		$contents = $wp_filesystem->get_contents( $maintenance_file );
+		$contents = (string) $wp_filesystem->get_contents( $maintenance_file );
 		$matches  = [];
 		if ( preg_match( '/upgrading\s*=\s*(\d+)\s*;/i', $contents, $matches ) ) {
 			$upgrading = (int) $matches[1];
