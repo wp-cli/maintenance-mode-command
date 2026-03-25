@@ -51,4 +51,5 @@
 		</properties>
 	</rule>
 
+	<exclude-pattern>/tests/phpstan/scan-files</exclude-pattern>
 </ruleset>
