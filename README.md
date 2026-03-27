@@ -3,7 +3,7 @@ wp-cli/maintenance-mode-command
 
 Activates, deactivates or checks the status of the maintenance mode of a site.
 
-[![Testing](https://github.com/wp-cli/maintenance-mode-command/actions/workflows/testing.yml/badge.svg)](https://github.com/wp-cli/maintenance-mode-command/actions/workflows/testing.yml)
+[![Testing](https://github.com/wp-cli/maintenance-mode-command/actions/workflows/testing.yml/badge.svg)](https://github.com/wp-cli/maintenance-mode-command/actions/workflows/testing.yml) [![Code Coverage](https://codecov.io/gh/wp-cli/maintenance-mode-command/branch/main/graph/badge.svg)](https://codecov.io/gh/wp-cli/maintenance-mode-command/tree/main)
 
 Quick links: [Using](#using) | [Installing](#installing) | [Contributing](#contributing) | [Support](#support)
 
