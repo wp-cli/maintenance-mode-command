@@ -65,7 +65,12 @@ Feature: Manage maintenance mode of WordPress install.
 
   Scenario: Check maintenance mode status when expression is used.
 
-    When I run `wp eval "file_put_contents('.maintenance', '<?php \$upgrading=(time()-601);'); "`
+    Given a setup.php file:
+      """
+      <?php
+      file_put_contents('.maintenance', '<?php $upgrading=(time()-601);');
+      """
+    When I run `wp eval-file setup.php`
     And I try `wp maintenance-mode is-active`
     Then the return code should be 1
     And STDERR should contain:
@@ -75,14 +80,29 @@ Feature: Manage maintenance mode of WordPress install.
 
   Scenario: Check maintenance mode status when numeric timestamp is used.
 
-    When I run `wp eval "file_put_contents('.maintenance', '<?php \$upgrading=' . ( time() + 100 ) . ';'); "`
+    Given a setup_num.php file:
+      """
+      <?php
+      file_put_contents('.maintenance', '<?php $upgrading=' . ( time() + 100 ) . ';');
+      """
+    When I run `wp eval-file setup_num.php`
     And I run `wp maintenance-mode is-active`
     Then the return code should be 0
 
-    When I run `wp eval "file_put_contents('.maintenance', '<?php \$upgrading =' . ( time() + 100 )  . ';')  ; "`
+    Given a setup_num_space.php file:
+      """
+      <?php
+      file_put_contents('.maintenance', '<?php $upgrading =' . ( time() + 100 )  . ';')  ;
+      """
+    When I run `wp eval-file setup_num_space.php`
     And I run `wp maintenance-mode is-active`
     Then the return code should be 0
 
-    When I run `wp eval "file_put_contents('.maintenance', '<?php \$upgrading= ' . ( time() + 100 )  . ';'); "`
+    Given a setup_num_space2.php file:
+      """
+      <?php
+      file_put_contents('.maintenance', '<?php $upgrading= ' . ( time() + 100 )  . ';');
+      """
+    When I run `wp eval-file setup_num_space2.php`
     And I run `wp maintenance-mode is-active`
     Then the return code should be 0
