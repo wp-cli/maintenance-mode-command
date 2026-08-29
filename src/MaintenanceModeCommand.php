@@ -132,7 +132,13 @@ class MaintenanceModeCommand extends WP_CLI_Command {
 	private function get_maintenance_mode_status() {
 		$wp_filesystem = $this->init_wp_filesystem();
 
-		$maintenance_file = trailingslashit( $wp_filesystem->abspath() ) . '.maintenance';
+		$abspath = $wp_filesystem->abspath();
+
+		if ( false === $abspath ) {
+			WP_CLI::error( 'Could not determine the WordPress root directory.' );
+		}
+
+		$maintenance_file = trailingslashit( $abspath ) . '.maintenance';
 
 		if ( ! $wp_filesystem->exists( $maintenance_file ) ) {
 			return false;
