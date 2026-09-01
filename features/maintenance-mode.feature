@@ -68,7 +68,7 @@ Feature: Manage maintenance mode of WordPress install.
     Given a setup.php file:
       """
       <?php
-      file_put_contents('.maintenance', '<?php $upgrading=(time()-601);');
+      file_put_contents( '.maintenance', '<?php $upgrading=(time()-601);' );
       """
     When I run `wp eval-file setup.php`
     And I try `wp maintenance-mode is-active`
@@ -83,7 +83,7 @@ Feature: Manage maintenance mode of WordPress install.
     Given a setup_num.php file:
       """
       <?php
-      file_put_contents('.maintenance', '<?php $upgrading=' . ( time() + 100 ) . ';');
+      file_put_contents( '.maintenance', '<?php $upgrading=' . ( time() + 100 ) . ';' );
       """
     When I run `wp eval-file setup_num.php`
     And I run `wp maintenance-mode is-active`
@@ -92,7 +92,7 @@ Feature: Manage maintenance mode of WordPress install.
     Given a setup_num_space.php file:
       """
       <?php
-      file_put_contents('.maintenance', '<?php $upgrading =' . ( time() + 100 )  . ';')  ;
+      file_put_contents( '.maintenance', '<?php $upgrading =' . ( time() + 100 ) . ';' );
       """
     When I run `wp eval-file setup_num_space.php`
     And I run `wp maintenance-mode is-active`
@@ -101,7 +101,7 @@ Feature: Manage maintenance mode of WordPress install.
     Given a setup_num_space2.php file:
       """
       <?php
-      file_put_contents('.maintenance', '<?php $upgrading= ' . ( time() + 100 )  . ';');
+      file_put_contents( '.maintenance', '<?php $upgrading= ' . ( time() + 100 ) . ';' );
       """
     When I run `wp eval-file setup_num_space2.php`
     And I run `wp maintenance-mode is-active`
